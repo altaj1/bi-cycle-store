@@ -1,0 +1,16 @@
+export enum ETcycletype {
+  Mountain = 'Mountain',
+  Road = 'Road',
+  Hybrid = 'Hybrid',
+  BMX = 'BMX',
+  Electric = 'Electric',
+}
+export type TbiCycle = {
+  name: string;
+  brand: string;
+  price: number;
+  type: ETcycletype;
+  description: string;
+  quantity: number;
+  inStock: boolean;
+};
