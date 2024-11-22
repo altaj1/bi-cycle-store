@@ -56,6 +56,25 @@ const createBicycle = async (req: Request, res: Response) => {
     });
   }
 };
+
+const getAllBicycle = async (req: Request, res: Response) => {
+  try {
+    const result = await BicycleService.getAllBicycleFromDB();
+    res.status(200).json({
+      success: true,
+      message: 'Students are retrieved succesfully',
+      data: result,
+    });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve bicycles. Please try again later.',
+      error: error.message || 'Internal Server Error',
+    });
+  }
+};
 export const BicycleControllers = {
   createBicycle,
+  getAllBicycle,
 };
