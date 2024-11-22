@@ -6,6 +6,6 @@ const createBicycleIntoDB = async (bicycleData: TbiCycle) => {
   return result;
 };
 
-export const bicycleService = {
+export const BicycleService = {
   createBicycleIntoDB,
 };
