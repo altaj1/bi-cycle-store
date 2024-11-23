@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import OrderValidationSchema from './order.ValidationSchema';
 import { OrderService } from './order.service';
 import { BicycleModel } from '../biCycle/biCycle.models';
+import { OrderModel } from './order.models';
 
 const createrOrder = async (req: Request, res: Response) => {
   try {
@@ -33,13 +34,13 @@ const createrOrder = async (req: Request, res: Response) => {
 
     await bicycle.save();
     const result = await OrderService.createOrederIntoDB(zodParedData);
-    res.status(200).json({
+    return res.status(200).json({
       message: 'Order created successfully',
       status: true,
       data: result,
     });
   } catch (err: any) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: err.message || 'something went wrong',
       error: err,
@@ -47,6 +48,25 @@ const createrOrder = async (req: Request, res: Response) => {
   }
 };
 
+const getOrderRevenue = async (req: Request, res: Response) => {
+  try {
+    const result = await OrderService.getOrdersRevenueFromBD();
+    return res.status(200).json({
+      message: 'Revenue calculated successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message:
+        error.message || 'Failed to retrieve revenue. Please try again later.',
+      error: error.message || 'Internal Server Error',
+    });
+  }
+};
+
 export const OrderControllers = {
   createrOrder,
+  getOrderRevenue,
 };
