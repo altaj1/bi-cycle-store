@@ -18,7 +18,7 @@ const createBicycle = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: 'Validation failed',
       error: err,
     });
   }
@@ -26,7 +26,8 @@ const createBicycle = async (req: Request, res: Response) => {
 
 const getAllBicycle = async (req: Request, res: Response) => {
   try {
-    const { searchTerm } = req.params;
+    const { searchTerm } = req.query;
+
     const result = await BicycleService.getAllBicycleFromDB(searchTerm);
     res.status(200).json({
       success: true,
@@ -68,6 +69,7 @@ const getSingleBicycle = async (req: Request, res: Response) => {
 const updateSingleBicycle = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
+    console.log(productId);
     const updates = req.body;
     const result = await BicycleService.updateSingleBicycleIntoDB(
       productId,
@@ -93,7 +95,7 @@ const deleteSingleBicycle = async (req: Request, res: Response) => {
     const { productId } = req.params;
     const result = await BicycleService.deleteSingleBicycleIntoDB(productId);
     res.status(200).json({
-      success: true,
+      status: true,
       message: 'Bicycle deleted successfully',
       data: result,
     });

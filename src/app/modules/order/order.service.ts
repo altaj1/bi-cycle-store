@@ -2,8 +2,12 @@ import { TOrder } from './order.interface';
 import { OrderModel } from './order.models';
 
 const createOrederIntoDB = async (orderData: TOrder) => {
-  const result = await OrderModel.create(orderData);
-  return result;
+  try {
+    const result = await OrderModel.create(orderData);
+    return result;
+  } catch (error) {
+    console.error('Error creating order in the database:', error);
+  }
 };
 
 const getOrdersRevenueFromBD = async () => {
@@ -23,11 +27,9 @@ const getOrdersRevenueFromBD = async () => {
     ]);
 
     const totalRevenue = result[0]?.totalRevenue || 0;
-    console.log(result);
     return { totalRevenue };
   } catch (error) {
     console.error(error);
-    throw new Error('Error calculating revenue');
   }
 };
 

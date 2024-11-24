@@ -46,6 +46,7 @@ const updateSingleBicycleIntoDB = async (id: string, updates: any) => {
       _id: new mongoose.Types.ObjectId(id),
     },
     { ...updates },
+    { new: true },
   );
   return result;
 };
