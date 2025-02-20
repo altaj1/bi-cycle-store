@@ -16,6 +16,8 @@ const VbicycleValidationSchema = z.object({
   description: z.string().min(1, 'Description is required'),
   quantity: z.number().int().min(0, 'Quantity must be a non-negative integer'),
   inStock: z.boolean(),
+  model: z.string(),
+  category: z.string(),
 });
 
 export const BicycleValidationSchema = {

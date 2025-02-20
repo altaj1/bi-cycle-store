@@ -22,6 +22,8 @@ const bicycleSchema = new Schema<TbiCycle>(
       min: [0, 'Quantity cannot be negative'],
     },
     inStock: { type: Boolean, required: true, default: true },
+    model: { type: String, required: true },
+    category: { type: String, required: true },
   },
   { timestamps: true },
 );
