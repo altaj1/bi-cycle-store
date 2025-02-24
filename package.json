@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "lint-staged": "^15.2.10",
     "mongoose": "^8.8.2",
+    "stripe": "^17.6.0",
     "ts-node-dev": "^2.0.0",
     "zod": "^3.23.8"
   },

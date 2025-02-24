@@ -18,6 +18,7 @@ const VbicycleValidationSchema = z.object({
   inStock: z.boolean(),
   model: z.string(),
   category: z.string(),
+  images: z.string(),
 });
 
 export const BicycleValidationSchema = {

@@ -3,6 +3,7 @@ import cors from 'cors';
 import { BicycleRoutes } from './app/modules/biCycle/bicycle.route';
 import { OrderRoutes } from './app/modules/order/order.route';
 import { AuthRoutes } from './app/modules/AuthRoutes/auth.route';
+import { UserRoutes } from './app/modules/user/user.route';
 
 const app: Application = express();
 
@@ -17,6 +18,7 @@ app.use(
 app.use('/api/products', BicycleRoutes);
 app.use('/api/orders', OrderRoutes);
 app.use('/api/auth', AuthRoutes);
+app.use('/api/user', UserRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });

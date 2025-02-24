@@ -16,4 +16,5 @@ export type TbiCycle = {
   inStock: boolean;
   model: string;
   category: string;
+  images: string;
 };

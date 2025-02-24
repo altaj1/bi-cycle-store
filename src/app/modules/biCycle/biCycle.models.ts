@@ -24,6 +24,7 @@ const bicycleSchema = new Schema<TbiCycle>(
     inStock: { type: Boolean, required: true, default: true },
     model: { type: String, required: true },
     category: { type: String, required: true },
+    images: { type: String, required: true },
   },
   { timestamps: true },
 );

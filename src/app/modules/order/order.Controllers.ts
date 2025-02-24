@@ -3,7 +3,11 @@ import { Request, Response } from 'express';
 import OrderValidationSchema from './order.ValidationSchema';
 import { OrderService } from './order.service';
 import { BicycleModel } from '../biCycle/biCycle.models';
-
+import Stripe from 'stripe';
+const stripe = new Stripe(
+  'sk_test_51PKvKvKf75RdS2ZUEeJaBjxKbIMm6mqjBNT6jIfF3lsdugu31LopYkvpZ4VtNQwAjImuejkcYJjfoFMRVU9jTFQu00FOjXmJi0',
+);
+console.log(process.env.STRIPE_SECRET_KEY);
 const createOrder = async (req: Request, res: Response): Promise<any> => {
   try {
     const orderData = req.body;
@@ -64,7 +68,31 @@ const getOrderRevenue = async (req: Request, res: Response) => {
   }
 };
 
+const paymentIntent = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const price = req.body.price;
+    const priceInCent = parseFloat(price) * 100;
+    console.log({ price });
+
+    if (!price || priceInCent < 100 || priceInCent > 100000) {
+      return res
+        .status(400)
+        .json({ error: 'Amount must be between $1 and $1000' });
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: priceInCent,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+    });
+
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
 export const OrderControllers = {
   createOrder,
   getOrderRevenue,
+  paymentIntent,
 };
