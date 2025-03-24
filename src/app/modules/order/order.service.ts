@@ -7,6 +7,7 @@ const createOrederIntoDB = async (orderData: TOrder) => {
     return result;
   } catch (error) {
     console.error('Error creating order in the database:', error);
+    throw error;
   }
 };
 
@@ -20,7 +21,7 @@ const getOrdersRevenueFromBD = async () => {
       },
       {
         $group: {
-          _id: null, // Group all the orders
+          _id: null,
           totalRevenue: { $sum: '$totalPrice' },
         },
       },
@@ -29,11 +30,33 @@ const getOrdersRevenueFromBD = async () => {
     const totalRevenue = result[0]?.totalRevenue || 0;
     return { totalRevenue };
   } catch (error) {
-    console.error(error);
+    console.error('Error calculating revenue:', error);
+    throw error;
+  }
+};
+
+const getAllOrdersFromDB = async () => {
+  try {
+    const orders = await OrderModel.find();
+    return orders;
+  } catch (error) {
+    console.error('Error fetching all orders:', error);
+    throw error;
+  }
+};
+const getOrdersByUserFromDB = async (email: string) => {
+  try {
+    const orders = await OrderModel.find({ email: email });
+    return orders;
+  } catch (error) {
+    console.error('Error fetching all orders:', error);
+    throw error;
   }
 };
 
 export const OrderService = {
   createOrederIntoDB,
   getOrdersRevenueFromBD,
+  getAllOrdersFromDB,
+  getOrdersByUserFromDB,
 };

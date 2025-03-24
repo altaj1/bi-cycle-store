@@ -91,8 +91,43 @@ const paymentIntent = async (req: Request, res: Response): Promise<any> => {
     res.status(500).json({ error: (error as Error).message });
   }
 };
+
+// Get all orders
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const result = await OrderService.getAllOrdersFromDB();
+    res.status(200).json({
+      message: 'Orders fetched successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to fetch orders',
+    });
+  }
+};
+const getOrdersByUser = async (req: Request, res: Response) => {
+  try {
+    const result = await OrderService.getOrdersByUserFromDB(req.params.email);
+    res.status(200).json({
+      message: 'Orders fetched successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to fetch orders',
+    });
+  }
+};
+
 export const OrderControllers = {
   createOrder,
   getOrderRevenue,
   paymentIntent,
+  getAllOrders,
+  getOrdersByUser,
 };
