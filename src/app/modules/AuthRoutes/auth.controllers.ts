@@ -21,10 +21,12 @@ const registerUser = catchAsync(async (req, res) => {
 const login = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
   res.cookie('accessToken', result, {
-    secure: false,
-    httpOnly: false,
-    sameSite: 'lax',
-    path: '/',
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+    // path: '/',
+    // sameSite: 'none',
+    // path: '/',
   });
   sendResponse(res, {
     statusCode: httpStatus.OK,

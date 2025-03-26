@@ -26,9 +26,14 @@ const createBicycle = async (req: Request, res: Response) => {
 
 const getAllBicycle = async (req: Request, res: Response) => {
   try {
-    const { searchTerm } = req.query;
+    let searchTerm: string | undefined;
+
+    if (typeof req.query.searchTerm === 'string') {
+      searchTerm = req.query.searchTerm;
+    }
 
     const result = await BicycleService.getAllBicycleFromDB(searchTerm);
+
     res.status(200).json({
       success: true,
       message: 'Bicycle is retrieved successfully',

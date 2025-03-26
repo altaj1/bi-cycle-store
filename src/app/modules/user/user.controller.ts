@@ -23,7 +23,7 @@ const getAllUser = async (req: Request, res: Response) => {
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    const result = await UserService.getAllUserDB(userId);
+    const result = await UserService.getSingleUserDB(userId);
     res.status(200).json({
       success: true,
       message: 'Bicycle is retrieve succesfully',
